@@ -120,6 +120,10 @@
             min-height: 400px;
         }
 
+        .video-embed-container {
+            margin-bottom: 10px;
+        }
+
         @media (max-width: 600px) {
             .lang-btn {
                 padding: 12px 10px;
@@ -179,28 +183,94 @@
         // CONFIGURATION SECTION
         // ========================================
         
-        const VIDEO_BASE_URL = 'https://your-hosting-server.com/videos/';
-        
         // Configure your videos here
-        // For each video number, specify the source for each language
-        // Use 'hosted' for MP4 files on your server, or provide Instagram URL
+        // Supported types: 'youtube', 'vimeo', 'instagram', 'tiktok'
         const VIDEO_CONFIG = {
             1: {
-                en: { type: 'hosted', file: 'video_1_en.mp4' },
-                ar: { type: 'instagram', url: 'https://www.instagram.com/reel/xxxxx/' },
-                fr: { type: 'hosted', file: 'video_1_fr.mp4' }
+                en: { type: 'vimeo', url: 'https://vimeo.com/1132742286' },
+                ar: { type: 'instagram', url: 'https://www.instagram.com/reel/DH836qlzpCs/' },
+                fr: { type: 'youtube', url: 'https://www.youtube.com/watch?v=ZobvrQoWWXs' }
             },
             2: {
-                en: { type: 'instagram', url: 'https://www.instagram.com/reel/yyyyy/' },
-                ar: { type: 'hosted', file: 'video_2_ar.mp4' },
-                fr: { type: 'instagram', url: 'https://www.instagram.com/reel/zzzzz/' }
+                en: { type: 'vimeo', url: 'https://vimeo.com/1132742295' },
+                ar: { type: 'youtube', url: 'https://www.youtube.com/shorts/VZ6eWGpP6fA' },
+                fr: { type: 'instagram', url: 'https://www.instagram.com/reel/DObgCQKCJ5H/' }
             },
             3: {
-                en: { type: 'hosted', file: 'video_3_en.mp4' },
-                ar: { type: 'hosted', file: 'video_3_ar.mp4' },
-                fr: { type: 'hosted', file: 'video_3_fr.mp4' }
+                en: { type: 'vimeo', url: 'https://vimeo.com/1132742267' },
+                ar: { type: 'youtube', url: 'https://youtu.be/Xu09_WMpZSw' },
+                fr: { type: 'vimeo', url: 'https://vimeo.com/1132742132' }
+            },
+            4: {
+                en: { type: 'vimeo', url: 'https://vimeo.com/1132742250' },
+                ar: { type: 'instagram', url: 'https://www.instagram.com/reel/DQH088Xk-96/' },
+                fr: { type: 'youtube', url: 'https://www.youtube.com/watch?v=QMnEP2DYfmI' }
+            },
+            5: {
+                en: { type: 'vimeo', url: 'https://vimeo.com/1132742236' },
+                ar: { type: 'youtube', url: 'https://www.youtube.com/shorts/VgM1SVzg2dg' },
+                fr: { type: 'youtube', url: 'https://www.youtube.com/shorts/tmKQ6IYjvJ4' }
+            },
+            6: {
+                en: { type: 'vimeo', url: 'https://vimeo.com/1132742210' },
+                ar: { type: 'vimeo', url: 'https://vimeo.com/1132742305' },
+                fr: { type: 'vimeo', url: 'https://vimeo.com/1132742132' }
+            },
+            7: {
+                en: { type: 'youtube', url: 'https://www.youtube.com/watch?v=jVayb_VhNU8' },
+                ar: { type: 'vimeo', url: 'https://vimeo.com/1132742305' },
+                fr: { type: 'youtube', url: 'https://www.youtube.com/watch?v=N8hqT_zM-68' }
+            },
+            8: {
+                en: { type: 'vimeo', url: 'https://vimeo.com/1132742184' },
+                ar: { type: 'youtube', url: 'https://www.youtube.com/watch?v=7_p9mxuIQp4' },
+                fr: { type: 'youtube', url: 'https://www.youtube.com/watch?v=K9vFWA1rnWc' }
+            },
+            9: {
+                en: { type: 'youtube', url: 'https://youtu.be/INfNlBp96Gs' },
+                ar: { type: 'instagram', url: 'https://www.instagram.com/edsha.ae' },
+                fr: { type: 'youtube', url: 'https://www.youtube.com/watch?v=yn9VxUPlC5g' }
+            },
+            10: {
+                en: { type: 'vimeo', url: 'https://vimeo.com/1132742171' },
+                ar: { type: 'youtube', url: 'https://www.youtube.com/watch?v=qeI12qk79X4' },
+                fr: { type: 'youtube', url: 'https://www.youtube.com/watch?v=4AKNW9fGLig' }
+            },
+            11: {
+                en: { type: 'vimeo', url: 'https://vimeo.com/1132742161' },
+                ar: { type: 'tiktok', url: 'https://www.tiktok.com/@1974_yidar/video/7438965064490634551' },
+                fr: { type: 'youtube', url: 'https://www.youtube.com/watch?v=YPzDfUJ2Z6o' }
+            },
+            12: {
+                en: { type: 'vimeo', url: 'https://vimeo.com/1132742154' },
+                ar: { type: 'youtube', url: 'https://www.youtube.com/watch?v=2VPZqOMPwGI' },
+                fr: { type: 'youtube', url: 'https://www.youtube.com/watch?v=GI4xXRpCguE' }
+            },
+            13: {
+                en: { type: 'vimeo', url: 'https://vimeo.com/1132742143' },
+                ar: { type: 'vimeo', url: 'https://vimeo.com/1132742305' },
+                fr: { type: 'youtube', url: 'https://www.youtube.com/shorts/effw1Fans74' }
+            },
+            14: {
+                en: { type: 'vimeo', url: 'https://vimeo.com/1132742143' },
+                ar: { type: 'youtube', url: 'https://www.youtube.com/shorts/N3VQoFZQV2w' },
+                fr: { type: 'youtube', url: 'https://youtube.com/shorts/hGot6kyzfwY' }
+            },
+            15: {
+                en: { type: 'vimeo', url: 'https://vimeo.com/1132742132' },
+                ar: { type: 'youtube', url: 'https://www.youtube.com/watch?v=DjP6Emj7wbQ' },
+                fr: { type: 'youtube', url: 'https://youtube.com/shorts/NiElw2aKKns' }
+            },
+            16: {
+                en: { type: 'vimeo', url: 'https://vimeo.com/1132742132' },
+                ar: { type: 'youtube', url: 'https://www.youtube.com/watch?v=wXa53sBapB0' },
+                fr: { type: 'youtube', url: 'https://www.youtube.com/watch?v=7Gci0Y264hA' }
+            },
+            17: {
+                en: { type: 'vimeo', url: 'https://vimeo.com/1132742132' },
+                ar: { type: 'tiktok', url: 'https://www.tiktok.com/@al_refa3e/video/7550383682222116113' },
+                fr: { type: 'youtube', url: 'https://www.youtube.com/watch?v=zEa6mKUShes' }
             }
-            // Add more video sets as needed
         };
         
         // ========================================
@@ -248,7 +318,7 @@
             const videoConfig = getVideoConfig(currentVideoNumber, currentLanguage);
             
             if (!videoConfig) {
-                showError(`Video ${currentVideoNumber} not found in configuration or language ${currentLanguage} not available`);
+                showError(`Chapter ${currentVideoNumber} not found or language ${currentLanguage} not available`);
                 return;
             }
 
@@ -262,35 +332,84 @@
             videoPlayer.style.display = 'none';
             errorMessage.style.display = 'none';
             
-            // Remove any existing Instagram embeds
-            const existingEmbed = document.querySelector('.instagram-embed-container');
+            // Remove any existing embeds
+            const existingEmbed = document.querySelector('.video-embed-container');
             if (existingEmbed) {
                 existingEmbed.remove();
             }
 
-            if (videoConfig.type === 'hosted') {
-                // Load hosted MP4 video
-                const videoUrl = VIDEO_BASE_URL + videoConfig.file;
-                videoPlayer.src = videoUrl;
+            if (videoConfig.type === 'youtube') {
+                // Extract YouTube video ID
+                let videoId = extractYouTubeId(videoConfig.url);
+                if (!videoId) {
+                    showError('Invalid YouTube URL');
+                    return;
+                }
                 
-                videoPlayer.onloadedmetadata = function() {
-                    loading.style.display = 'none';
-                    videoPlayer.style.display = 'block';
-                };
+                loading.style.display = 'none';
+                createIframeEmbed(
+                    `https://www.youtube.com/embed/${videoId}`,
+                    videoContainer,
+                    videoPlayer
+                );
                 
-                videoPlayer.onerror = function() {
-                    showError(`Could not load video: ${videoUrl}`);
-                };
+            } else if (videoConfig.type === 'vimeo') {
+                // Extract Vimeo video ID
+                let videoId = extractVimeoId(videoConfig.url);
+                if (!videoId) {
+                    showError('Invalid Vimeo URL');
+                    return;
+                }
                 
-            } else if (videoConfig.type === 'instagram') {
-                // Load Instagram embed
+                loading.style.display = 'none';
+                createIframeEmbed(
+                    `https://player.vimeo.com/video/${videoId}`,
+                    videoContainer,
+                    videoPlayer
+                );
+                
+            } else if (videoConfig.type === 'tiktok') {
+                // TikTok embed
                 loading.style.display = 'none';
                 
                 const embedContainer = document.createElement('div');
-                embedContainer.className = 'instagram-embed-container';
+                embedContainer.className = 'video-embed-container';
+                embedContainer.style.cssText = 'width: 100%; max-width: 605px; margin: 0 auto; display: flex; justify-content: center;';
+                
+                const blockquote = document.createElement('blockquote');
+                blockquote.className = 'tiktok-embed';
+                blockquote.setAttribute('cite', videoConfig.url);
+                blockquote.setAttribute('data-video-id', extractTikTokId(videoConfig.url));
+                blockquote.style.cssText = 'max-width: 605px; min-width: 325px;';
+                
+                const section = document.createElement('section');
+                const link = document.createElement('a');
+                link.href = videoConfig.url;
+                link.target = '_blank';
+                link.textContent = 'View on TikTok';
+                section.appendChild(link);
+                blockquote.appendChild(section);
+                embedContainer.appendChild(blockquote);
+                
+                videoContainer.insertBefore(embedContainer, videoPlayer);
+                
+                // Load TikTok embed script
+                if (!window.tiktokEmbed) {
+                    const script = document.createElement('script');
+                    script.async = true;
+                    script.src = 'https://www.tiktok.com/embed.js';
+                    document.body.appendChild(script);
+                    window.tiktokEmbed = true;
+                }
+                
+            } else if (videoConfig.type === 'instagram') {
+                // Instagram embed
+                loading.style.display = 'none';
+                
+                const embedContainer = document.createElement('div');
+                embedContainer.className = 'video-embed-container';
                 embedContainer.style.cssText = 'width: 100%; max-width: 540px; margin: 0 auto;';
                 
-                // Create Instagram embed
                 const blockquote = document.createElement('blockquote');
                 blockquote.className = 'instagram-media';
                 blockquote.setAttribute('data-instgrm-permalink', videoConfig.url);
@@ -307,7 +426,7 @@
                 embedContainer.appendChild(blockquote);
                 videoContainer.insertBefore(embedContainer, videoPlayer);
                 
-                // Load Instagram embed script if not already loaded
+                // Load Instagram embed script
                 if (!window.instgrm) {
                     const script = document.createElement('script');
                     script.async = true;
@@ -317,6 +436,48 @@
                     window.instgrm.Embeds.process();
                 }
             }
+        }
+
+        // Create iframe embed for YouTube/Vimeo
+        function createIframeEmbed(src, container, videoPlayer) {
+            const embedContainer = document.createElement('div');
+            embedContainer.className = 'video-embed-container';
+            embedContainer.style.cssText = 'position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;';
+            
+            const iframe = document.createElement('iframe');
+            iframe.src = src;
+            iframe.style.cssText = 'position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; border-radius: 12px;';
+            iframe.setAttribute('allowfullscreen', '');
+            iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+            
+            embedContainer.appendChild(iframe);
+            container.insertBefore(embedContainer, videoPlayer);
+        }
+
+        // Extract YouTube video ID from various URL formats
+        function extractYouTubeId(url) {
+            const patterns = [
+                /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([^&\?\/]+)/,
+                /youtube\.com\/embed\/([^&\?\/]+)/
+            ];
+            
+            for (let pattern of patterns) {
+                const match = url.match(pattern);
+                if (match) return match[1];
+            }
+            return null;
+        }
+
+        // Extract Vimeo video ID
+        function extractVimeoId(url) {
+            const match = url.match(/vimeo\.com\/(\d+)/);
+            return match ? match[1] : null;
+        }
+
+        // Extract TikTok video ID
+        function extractTikTokId(url) {
+            const match = url.match(/video\/(\d+)/);
+            return match ? match[1] : null;
         }
 
         // Show error message
