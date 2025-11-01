@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .video-number {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .language-selector {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .lang-btn {
+            flex: 1;
+            margin: 0 5px;
+            padding: 15px 20px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .lang-btn:active {
+            transform: scale(0.95);
+        }
+
+        .lang-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+
+        .video-container {
+            padding: 20px;
+            min-height: 300px;
+        }
+
+        video {
+            width: 100%;
+            border-radius: 12px;
+            background: #000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .error-message {
+            text-align: center;
+            padding: 40px 20px;
+            color: #dc3545;
+            font-size: 18px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px 20px;
+            color: #667eea;
+            font-size: 18px;
+        }
+
+        .info-text {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        .instagram-embed-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 400px;
+        }
+
+        @media (max-width: 600px) {
+            .lang-btn {
+                padding: 12px 10px;
+                font-size: 14px;
+                margin: 0 3px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .video-number {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📖 The Secret of Charity</h1>
+            <div class="video-number" id="videoNumber">Chapter: --</div>
+        </div>
+
+        <div class="language-selector">
+            <button class="lang-btn active" onclick="selectLanguage('en')" id="btn-en">
+                English
+            </button>
+            <button class="lang-btn" onclick="selectLanguage('ar')" id="btn-ar">
+                العربية
+            </button>
+            <button class="lang-btn" onclick="selectLanguage('fr')" id="btn-fr">
+                Français
+            </button>
+        </div>
+
+        <div class="video-container">
+            <div class="loading" id="loading">Loading video...</div>
+            <video id="videoPlayer" controls controlsList="nodownload" preload="metadata" style="display: none;">
+                Your browser does not support the video tag.
+            </video>
+            <div class="error-message" id="errorMessage" style="display: none;"></div>
+        </div>
+
+        <div class="info-text">
+            📚 Select your preferred language to watch the chapter video
+        </div>
+
+        <div style="text-align: center; padding: 15px 20px; background: #f8f9fa; color: #6c757d; font-size: 13px; border-top: 1px solid #e9ecef;">
+            <p style="margin: 0; font-weight: 500;">🤲 The Secret of Charity</p>
+            <p style="margin: 5px 0 0 0; font-size: 12px;">Spreading kindness and compassion through knowledge</p>
+        </div>
+    </div>
+
+    <script>
+        // ========================================
+        // CONFIGURATION SECTION
+        // ========================================
+        
+        const VIDEO_BASE_URL = 'https://your-hosting-server.com/videos/';
+        
+        // Configure your videos here
+        // For each video number, specify the source for each language
+        // Use 'hosted' for MP4 files on your server, or provide Instagram URL
+        const VIDEO_CONFIG = {
+            1: {
+                en: { type: 'hosted', file: 'video_1_en.mp4' },
+                ar: { type: 'instagram', url: 'https://www.instagram.com/reel/xxxxx/' },
+                fr: { type: 'hosted', file: 'video_1_fr.mp4' }
+            },
+            2: {
+                en: { type: 'instagram', url: 'https://www.instagram.com/reel/yyyyy/' },
+                ar: { type: 'hosted', file: 'video_2_ar.mp4' },
+                fr: { type: 'instagram', url: 'https://www.instagram.com/reel/zzzzz/' }
+            },
+            3: {
+                en: { type: 'hosted', file: 'video_3_en.mp4' },
+                ar: { type: 'hosted', file: 'video_3_ar.mp4' },
+                fr: { type: 'hosted', file: 'video_3_fr.mp4' }
+            }
+            // Add more video sets as needed
+        };
+        
+        // ========================================
+        // APPLICATION CODE
+        // ========================================
+        
+        let currentVideoNumber = null;
+        let currentLanguage = 'en';
+
+        // Get video number from URL parameter
+        function getVideoNumber() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('number') || urlParams.get('id') || urlParams.get('v');
+        }
+
+        // Get video configuration for current number and language
+        function getVideoConfig(number, language) {
+            if (!VIDEO_CONFIG[number]) {
+                return null;
+            }
+            return VIDEO_CONFIG[number][language];
+        }
+
+        // Select language and load video
+        function selectLanguage(language) {
+            currentLanguage = language;
+            
+            // Update button states
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`btn-${language}`).classList.add('active');
+            
+            // Load video
+            loadVideo();
+        }
+
+        // Load video for current language and number
+        function loadVideo() {
+            if (!currentVideoNumber) {
+                showError('No video number specified. Please add ?number=X to the URL');
+                return;
+            }
+
+            const videoConfig = getVideoConfig(currentVideoNumber, currentLanguage);
+            
+            if (!videoConfig) {
+                showError(`Video ${currentVideoNumber} not found in configuration or language ${currentLanguage} not available`);
+                return;
+            }
+
+            const videoContainer = document.getElementById('videoPlayer').parentElement;
+            const loading = document.getElementById('loading');
+            const errorMessage = document.getElementById('errorMessage');
+            const videoPlayer = document.getElementById('videoPlayer');
+            
+            // Show loading
+            loading.style.display = 'block';
+            videoPlayer.style.display = 'none';
+            errorMessage.style.display = 'none';
+            
+            // Remove any existing Instagram embeds
+            const existingEmbed = document.querySelector('.instagram-embed-container');
+            if (existingEmbed) {
+                existingEmbed.remove();
+            }
+
+            if (videoConfig.type === 'hosted') {
+                // Load hosted MP4 video
+                const videoUrl = VIDEO_BASE_URL + videoConfig.file;
+                videoPlayer.src = videoUrl;
+                
+                videoPlayer.onloadedmetadata = function() {
+                    loading.style.display = 'none';
+                    videoPlayer.style.display = 'block';
+                };
+                
+                videoPlayer.onerror = function() {
+                    showError(`Could not load video: ${videoUrl}`);
+                };
+                
+            } else if (videoConfig.type === 'instagram') {
+                // Load Instagram embed
+                loading.style.display = 'none';
+                
+                const embedContainer = document.createElement('div');
+                embedContainer.className = 'instagram-embed-container';
+                embedContainer.style.cssText = 'width: 100%; max-width: 540px; margin: 0 auto;';
+                
+                // Create Instagram embed
+                const blockquote = document.createElement('blockquote');
+                blockquote.className = 'instagram-media';
+                blockquote.setAttribute('data-instgrm-permalink', videoConfig.url);
+                blockquote.setAttribute('data-instgrm-version', '14');
+                blockquote.style.cssText = 'background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);';
+                
+                const link = document.createElement('a');
+                link.href = videoConfig.url;
+                link.target = '_blank';
+                link.textContent = 'View this post on Instagram';
+                link.style.cssText = 'background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%; display:block;';
+                
+                blockquote.appendChild(link);
+                embedContainer.appendChild(blockquote);
+                videoContainer.insertBefore(embedContainer, videoPlayer);
+                
+                // Load Instagram embed script if not already loaded
+                if (!window.instgrm) {
+                    const script = document.createElement('script');
+                    script.async = true;
+                    script.src = '//www.instagram.com/embed.js';
+                    document.body.appendChild(script);
+                } else {
+                    window.instgrm.Embeds.process();
+                }
+            }
+        }
+
+        // Show error message
+        function showError(message) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('videoPlayer').style.display = 'none';
+            const errorElement = document.getElementById('errorMessage');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+
+        // Initialize on page load
+        window.onload = function() {
+            currentVideoNumber = getVideoNumber();
+            
+            if (currentVideoNumber) {
+                document.getElementById('videoNumber').textContent = `Chapter: ${currentVideoNumber}`;
+                loadVideo();
+            } else {
+                showError('Please specify a video number in the URL (e.g., ?number=1)');
+            }
+        };
+    </script>
+</body>
+</html>
