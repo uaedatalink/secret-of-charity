@@ -124,6 +124,19 @@
             margin-bottom: 10px;
         }
 
+        .video-embed-container.vertical {
+            max-width: 400px;
+            margin: 0 auto;
+            padding-bottom: 177.78% !important; /* 9:16 aspect ratio for vertical videos */
+        }
+
+        @media (max-width: 600px) {
+            .video-embed-container.vertical {
+                max-width: 100%;
+                padding-bottom: 177.78% !important;
+            }
+        }
+
         @media (max-width: 600px) {
             .lang-btn {
                 padding: 12px 10px;
@@ -346,11 +359,15 @@
                     return;
                 }
                 
+                // Check if it's a YouTube Short (vertical video)
+                const isShort = videoConfig.url.includes('/shorts/');
+                
                 loading.style.display = 'none';
                 createIframeEmbed(
                     `https://www.youtube.com/embed/${videoId}`,
                     videoContainer,
-                    videoPlayer
+                    videoPlayer,
+                    isShort  // Pass vertical flag for shorts
                 );
                 
             } else if (videoConfig.type === 'vimeo') {
@@ -439,10 +456,17 @@
         }
 
         // Create iframe embed for YouTube/Vimeo
-        function createIframeEmbed(src, container, videoPlayer) {
+        function createIframeEmbed(src, container, videoPlayer, isVertical = false) {
             const embedContainer = document.createElement('div');
             embedContainer.className = 'video-embed-container';
-            embedContainer.style.cssText = 'position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;';
+            
+            // Add vertical class for shorts/reels
+            if (isVertical) {
+                embedContainer.classList.add('vertical');
+                embedContainer.style.cssText = 'position: relative; padding-bottom: 177.78%; height: 0; overflow: hidden; border-radius: 12px; max-width: 400px; margin: 0 auto;';
+            } else {
+                embedContainer.style.cssText = 'position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;';
+            }
             
             const iframe = document.createElement('iframe');
             iframe.src = src;
