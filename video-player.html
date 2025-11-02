@@ -260,8 +260,8 @@
                 en: { type: 'vimeo', url: 'https://vimeo.com/1132820101' }
             },
             13: {
-                fr: { type: 'vimeo', url: 'https://vimeo.com/1132742236' },
-                ar: { type: 'vimeo', url: 'https://vimeo.com/1132742305' },
+                fr: { type: 'vimeo', url: 'https://vimeo.com/1132742236', vertical: true },
+                ar: { type: 'vimeo', url: 'https://vimeo.com/1132742305', vertical: true },
                 en: { type: 'youtube', url: 'https://www.youtube.com/shorts/tmKQ6IYjvJ4' }
             },
             14: {
@@ -378,11 +378,15 @@
                     return;
                 }
                 
+                // Check if manually marked as vertical
+                const isVertical = videoConfig.vertical === true;
+                
                 loading.style.display = 'none';
                 createIframeEmbed(
                     `https://player.vimeo.com/video/${videoId}`,
                     videoContainer,
-                    videoPlayer
+                    videoPlayer,
+                    isVertical  // Pass vertical flag
                 );
                 
             } else if (videoConfig.type === 'tiktok') {
