@@ -390,72 +390,62 @@
                 );
                 
             } else if (videoConfig.type === 'tiktok') {
-                // TikTok embed
+                // TikTok - Use link button for better mobile compatibility
                 loading.style.display = 'none';
                 
                 const embedContainer = document.createElement('div');
                 embedContainer.className = 'video-embed-container';
-                embedContainer.style.cssText = 'width: 100%; max-width: 605px; margin: 0 auto; display: flex; justify-content: center;';
+                embedContainer.style.cssText = 'width: 100%; max-width: 540px; margin: 0 auto; padding: 60px 20px; text-align: center;';
                 
-                const blockquote = document.createElement('blockquote');
-                blockquote.className = 'tiktok-embed';
-                blockquote.setAttribute('cite', videoConfig.url);
-                blockquote.setAttribute('data-video-id', extractTikTokId(videoConfig.url));
-                blockquote.style.cssText = 'max-width: 605px; min-width: 325px;';
+                // Create a nice button to open TikTok
+                const button = document.createElement('a');
+                button.href = videoConfig.url;
+                button.target = '_blank';
+                button.rel = 'noopener noreferrer';
+                button.style.cssText = 'display: inline-block; background: linear-gradient(135deg, #000000 0%, #ee1d52 50%, #69c9d0 100%); color: white; padding: 20px 40px; border-radius: 12px; text-decoration: none; font-size: 18px; font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: transform 0.2s;';
+                button.innerHTML = '🎵 Watch on TikTok';
                 
-                const section = document.createElement('section');
-                const link = document.createElement('a');
-                link.href = videoConfig.url;
-                link.target = '_blank';
-                link.textContent = 'View on TikTok';
-                section.appendChild(link);
-                blockquote.appendChild(section);
-                embedContainer.appendChild(blockquote);
+                // Add hover effect
+                button.onmouseover = function() { this.style.transform = 'scale(1.05)'; };
+                button.onmouseout = function() { this.style.transform = 'scale(1)'; };
                 
+                // Add description text
+                const description = document.createElement('p');
+                description.style.cssText = 'margin-top: 20px; color: #6c757d; font-size: 14px;';
+                description.textContent = 'Tap the button above to watch this video on TikTok';
+                
+                embedContainer.appendChild(button);
+                embedContainer.appendChild(description);
                 videoContainer.insertBefore(embedContainer, videoPlayer);
-                
-                // Load TikTok embed script
-                if (!window.tiktokEmbed) {
-                    const script = document.createElement('script');
-                    script.async = true;
-                    script.src = 'https://www.tiktok.com/embed.js';
-                    document.body.appendChild(script);
-                    window.tiktokEmbed = true;
-                }
                 
             } else if (videoConfig.type === 'instagram') {
-                // Instagram embed
+                // Instagram - Use link button instead of embed for better mobile compatibility
                 loading.style.display = 'none';
                 
                 const embedContainer = document.createElement('div');
                 embedContainer.className = 'video-embed-container';
-                embedContainer.style.cssText = 'width: 100%; max-width: 540px; margin: 0 auto;';
+                embedContainer.style.cssText = 'width: 100%; max-width: 540px; margin: 0 auto; padding: 60px 20px; text-align: center;';
                 
-                const blockquote = document.createElement('blockquote');
-                blockquote.className = 'instagram-media';
-                blockquote.setAttribute('data-instgrm-permalink', videoConfig.url);
-                blockquote.setAttribute('data-instgrm-version', '14');
-                blockquote.style.cssText = 'background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);';
+                // Create a nice button to open Instagram
+                const button = document.createElement('a');
+                button.href = videoConfig.url;
+                button.target = '_blank';
+                button.rel = 'noopener noreferrer';
+                button.style.cssText = 'display: inline-block; background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; padding: 20px 40px; border-radius: 12px; text-decoration: none; font-size: 18px; font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: transform 0.2s;';
+                button.innerHTML = '📸 Watch on Instagram';
                 
-                const link = document.createElement('a');
-                link.href = videoConfig.url;
-                link.target = '_blank';
-                link.textContent = 'View this post on Instagram';
-                link.style.cssText = 'background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%; display:block;';
+                // Add hover effect
+                button.onmouseover = function() { this.style.transform = 'scale(1.05)'; };
+                button.onmouseout = function() { this.style.transform = 'scale(1)'; };
                 
-                blockquote.appendChild(link);
-                embedContainer.appendChild(blockquote);
+                // Add description text
+                const description = document.createElement('p');
+                description.style.cssText = 'margin-top: 20px; color: #6c757d; font-size: 14px;';
+                description.textContent = 'Tap the button above to watch this video on Instagram';
+                
+                embedContainer.appendChild(button);
+                embedContainer.appendChild(description);
                 videoContainer.insertBefore(embedContainer, videoPlayer);
-                
-                // Load Instagram embed script
-                if (!window.instgrm) {
-                    const script = document.createElement('script');
-                    script.async = true;
-                    script.src = '//www.instagram.com/embed.js';
-                    document.body.appendChild(script);
-                } else {
-                    window.instgrm.Embeds.process();
-                }
             }
         }
 
